@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="app">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+  <link rel="stylesheet" href="materialize.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/css/materialize.min.css">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/js/materialize.min.js"></script>
+  <script src='bower_components/angular/angular.js'></script>
+  <script type="text/javascript">
+    let myApp = angular.module('app', []);
+    myApp.controller('userController', ['$scope', function ($scope) {
+        $scope.users = [
+        ];
+        $scope.addUser = function() {
+
+            $scope.users.push($scope.userModel);
+            $scope.userModel = null;
+        };
+        $scope.printIndex = function(val) {
+            console.log(val);
+        };
+        $scope.deleteUser = function (val, val2) {
+            $scope.users.splice(val, val2);
+        }
+    }]);
+  </script>
+</head>
+<body ng-controller="userController">
+<div class="container">
+  <form>
+  <div class="input-field">
+    <input class="validate" id="first_name" type="text" ng-model="userModel.first_name">
+    <label for="first_name">First Name</label>
+  </div>
+  <div class="input-field">
+    <input class="validate" id="last_name" type="text" ng-model="userModel.last_name">
+    <label for="last_name">Last Name</label>
+  </div>
+  <div class="input-field">
+    <input class="validate" id="lang" type="text" ng-model="userModel.favorite_language">
+    <label for="lang">Favorite Language</label>
+  </div>
+  <input type="submit" class="btn black right" value="Create User" ng-click="addUser()">
+  </form>
+  <table class="striped">
+    <thead>
+    <tr>
+      <th data-field="first_name">First Name</th>
+      <th data-field="last_name">Last Name</th>
+      <th data-field="lang">Fav Language</th>
+      <th data-field="actions">Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr ng-repeat="(key, val) in users track by $index">
+      <td>{{val.first_name}}</td>
+      <td>{{val.last_name}}</td>
+      <td>{{val.favorite_language}}</td>
+      <td><input type="submit" class="btn red" value="Delete" ng-click="deleteUser(key, 1)"></td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+</body>
+</html>
